@@ -1,0 +1,1 @@
+I am assuming based on the Sructural platform that every field in the person object is needed for the platform.
