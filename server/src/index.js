@@ -1,8 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const graphqlHTTP = require('express-graphql');
 const logger = require('morgan');
-const resolvers = require('./resolvers');
+const rootQuery = require('./resolvers');
 const typeDefs = require('./schema');
 
 var app = express();
@@ -10,7 +9,7 @@ app.use(logger('dev'));
 
 app.use('/', graphqlHTTP({
     schema: typeDefs,
-    rootValue: resolvers.Query,
+    rootValue: rootQuery,
     graphiql: false
 }));
 

@@ -6,17 +6,19 @@ var typeDefs = buildSchema(`
         firstName: String!
         lastName: String!
         jobTitle: String!
-        department(id: String!): Department!
-        manager(id: String!): Person
+        department: Department!
+        manager: Person
     }
 
     type Department {
         name: String!
         id: String!
+        people: [Person]
     }
     
     type Query {
         getPeople: [Person]
+        getPerson(id: String!): Person
     }
 `);
 
