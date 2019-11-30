@@ -17,8 +17,32 @@ var typeDefs = buildSchema(`
     }
     
     type Query {
+        # Get all of the people in the company
         getPeople: [Person]
-        getPerson(id: String!): Person
+
+        # Get a person by their ID
+        getPersonById(id: String): Person
+
+        # Get a person by their first name
+        getPersonByFirstName(firstName: String): [Person]
+
+        # Get a person by their last name
+        getPersonByLastName(lastName: String): [Person]
+        
+        # Get a person by their full name
+        getPersonByFullName(firstName: String, lastName: String): [Person]
+
+        # Get a person by their job title
+        getPersonByJobTitle(jobType: String): [Person]
+
+        # Get all of the Departments in the company
+        getDepartments: [Department]
+
+        # Get a department of the company by its ID
+        getDepartmentById(id: String): Department
+
+        # get the departments of the company by their name
+        getDepartmentByName(name: String): [Department]
     }
 `);
 
