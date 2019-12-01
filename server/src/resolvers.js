@@ -1,10 +1,10 @@
-const {MongoClient} = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 // TODO: refactor this to make it part of the context of the graphql
-const MONGO_URL = 'mongodb://localhost:27017';
-const dbName = 'company';
-const client = new MongoClient(MONGO_URL);
-var db, People, Departments;
+const MONGO_URL = `mongodb://mongo:27017`;
+const dbName = `company`;
+const client = new MongoClient(MONGO_URL, { useUnifiedTopology: true });
+var db, peopleCollection, departmentsCollection;
 client.connect().then((client) => {
     console.log('Connected to MongoDB');
     db = client.db(dbName);
@@ -30,7 +30,12 @@ class Person {
         const personJSON = await peopleCollection.findOne({ id: this.id });
         if (personJSON.managerId === undefined) return null;
         const managerJSON = await peopleCollection.findOne({ id: personJSON.managerId });
-        return new Person(managerJSON.id, managerJSON.firstName, managerJSON.lastName, managerJSON.jobTitle);
+        return new Person(
+            managerJSON.id, 
+            managerJSON.firstName, 
+            managerJSON.lastName, 
+            managerJSON.jobTitle
+        );
     }
 }
 
@@ -50,7 +55,12 @@ class Department {
 
 function mapJSONtoPersonArray(json) {
     return json.map((type) => {
-        return new Person(type.id, type.firstName, type.lastName, type.jobTitle);
+        return new Person(
+            type.id, 
+            type.firstName, 
+            type.lastName, 
+            type.jobTitle
+        );
     });
 }
 
@@ -67,7 +77,12 @@ const rootQuery = {
     },
     getPersonById: async ({ id }) => {
         const personJSON = await peopleCollection.findOne({ id });
-        return new Person(personJSON.id, personJSON.firstName, personJSON.lastName, personJSON.jobTitle);
+        return new Person(
+            personJSON.id, 
+            personJSON.firstName, 
+            personJSON.lastName, 
+            personJSON.jobTitle
+        );
     },
     getPersonByFirstName: async ({ firstName }) => {
         const peopleJSON = await peopleCollection.find({ firstName }).toArray();
@@ -96,6 +111,51 @@ const rootQuery = {
     getDepartmentByName: async ({ name }) => {
         const departmentsJSON = await departmentsCollection.find({ name }).toArray();
         return mapJSONtoDepartmentArray(departmentsJSON);
+    },
+    createPerson: async ({ input }) => {
+        const jsonOutput = await peopleCollection.insertOne({ 
+            id: input.id, 
+            firstName: input.firstName,
+            lastName: input.lastName,
+            jobTitle: input.jobTitle,
+            departmentId: input.departmentId,
+            managerId: input.managerId
+        });
+        const newPersonJSON = jsonOutput.ops && jsonOutput.ops[0];
+        return new Person(
+            newPersonJSON.id, 
+            newPersonJSON.firstName, 
+            newPersonJSON.lastName, 
+            newPersonJSON.jobTitle, 
+            newPersonJSON.departmentId, 
+            newPersonJSON.managerId
+        );
+    },
+    createDepartment: async ({ input }) => {
+        const jsonOutput = await departmentsCollection.insertOne({
+            name: input.name,
+            id: input.id
+        });
+        const newDepartmentJSON = jsonOutput.ops && jsonOutput.ops[0];
+        return new Department(
+            newDepartmentJSON.id,
+            newDepartmentJSON.name
+        );
+    },
+    updatePerson: async ({ id, input }) => {
+        const jsonOutput = await peopleCollection.updateOne(
+            { id: id },
+            {$set: {
+                id: input.id,
+                firstName: input.firstName,
+                lastName: input.lastName,
+                jobTitle: input.jobTitle,
+                departmentId: input.departmentId,
+                managerId: input.managerId
+            }}
+        );
+        console.log(jsonOutput);
+        return new Person()
     }
 }
 

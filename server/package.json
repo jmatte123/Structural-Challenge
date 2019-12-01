@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend for Structural Challenge",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js",
-    "start:ci": "node src/index.js"
+    "start": "nodemon src/server.js",
+    "start:ci": "node src/server.js"
   },
   "author": "Joe Matteson",
   "license": "ISC",
@@ -15,7 +15,7 @@
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.6",
-    "mongoose": "^5.7.12",
+    "mongodb": "^3.3.5",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.1",
     "typescript": "^3.7.2"

@@ -15,6 +15,20 @@ var typeDefs = buildSchema(`
         id: String!
         people: [Person]
     }
+
+    input PersonInput {
+        id: String!
+        firstName: String!
+        lastName: String!
+        jobTitle: String!
+        departmentId: String!
+        managerId: String
+    }
+
+    input DepartmentInput {
+        name: String!
+        id: String!
+    }
     
     type Query {
         # Get all of the people in the company
@@ -43,6 +57,12 @@ var typeDefs = buildSchema(`
 
         # get the departments of the company by their name
         getDepartmentByName(name: String): [Department]
+    }
+
+    type Mutation {
+        createPerson(input: PersonInput!): Person
+        createDepartment(input: DepartmentInput!): Department
+        updatePerson(id: String!, input: PersonInput!): Person
     }
 `);
 

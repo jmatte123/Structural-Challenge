@@ -5,7 +5,7 @@ const rootQuery = require('./resolvers');
 const typeDefs = require('./schema');
 
 var app = express();
-app.use(logger('dev'));
+//app.use(logger('dev'));
 
 app.use('/', graphqlHTTP({
     schema: typeDefs,
