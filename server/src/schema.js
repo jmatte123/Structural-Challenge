@@ -1,6 +1,6 @@
-const { buildSchema } = require('graphql');
+const { gql } = require('apollo-server');
 
-var typeDefs = buildSchema(`
+var typeDefs = gql`
     type Person {
         id: String!
         firstName: String!
@@ -17,7 +17,7 @@ var typeDefs = buildSchema(`
     }
 
     input PersonInput {
-        id: String!
+        id: ID!
         firstName: String!
         lastName: String!
         jobTitle: String!
@@ -27,7 +27,7 @@ var typeDefs = buildSchema(`
 
     input DepartmentInput {
         name: String!
-        id: String!
+        id: ID!
     }
     
     type Query {
@@ -35,7 +35,7 @@ var typeDefs = buildSchema(`
         getPeople: [Person]
 
         # Get a person by their ID
-        getPersonById(id: String): Person
+        getPersonById(id: ID): Person
 
         # Get a person by their first name
         getPersonByFirstName(firstName: String): [Person]
@@ -53,7 +53,7 @@ var typeDefs = buildSchema(`
         getDepartments: [Department]
 
         # Get a department of the company by its ID
-        getDepartmentById(id: String): Department
+        getDepartmentById(id: ID): Department
 
         # get the departments of the company by their name
         getDepartmentByName(name: String): [Department]
@@ -64,6 +64,6 @@ var typeDefs = buildSchema(`
         createDepartment(input: DepartmentInput!): Department
         updatePerson(id: String!, input: PersonInput!): Person
     }
-`);
+`;
 
 module.exports = typeDefs;
