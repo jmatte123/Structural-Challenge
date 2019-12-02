@@ -12,7 +12,7 @@ var app = express();
 app.use('/', graphqlHTTP({
     schema: typeDefs,
     rootValue: rootQuery,
-    graphiql: false
+    graphiql: true
 }));
 
 app.listen(4000, () => {

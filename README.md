@@ -16,13 +16,13 @@ Next, install docker via brew
 brew cask install docker
 ```
 
-Go into the server folder and execute the following commands to build the server-side docker images and run the images 
+Execute the following commands to build the server-side docker images and run the images 
 
 ```bash
-cd server/
 docker build -t server ./server 
 docker-compose up
 ```
+Then, start up your GraphQL Playground application and run queries on the database.  Not much happens because there is no data in the database.  lets fix this...
 
 ### Populating the MongoDB Database
 
