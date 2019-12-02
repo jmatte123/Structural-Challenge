@@ -1,6 +1,6 @@
 # Structural Challenge
 
-This repositories 
+This repositories holds my submission for the coding challenge at Structural.  In this reposititory, I use GraphQL, Node.js, Express.js, and MongoDB to create an API for the given dataset of people and departments in a fake company.  Follow the installation process to create a docker-compose container with MongoDB and all the data inside of it where you can use GraphQL Playground and run quiers on it.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Execute the following commands to build the server-side docker images and run th
 docker build -t server ./server 
 docker-compose up
 ```
-Then, start up your GraphQL Playground application and run queries on the database.  Not much happens because there is no data in the database.  lets fix this...
+Next, we will be creating the database and the corresponding collections in the database. We will also be populating the database collections with data provided in the dataset.
 
 ### Populating the MongoDB Database
 
