@@ -118,9 +118,10 @@ const rootQuery = {
             newDepartmentJSON.name
         );
     },
-    // update a person in the database based on a given id
+    // update a person in the database based on a given id and return the old person.
     updatePerson: async ({ id, input }) => {
         // TODO: verify the input data with pre-existing data
+        const personJSON = await global.peopleCollection.findOne({ id });
         const jsonOutput = await global.peopleCollection.updateOne(
             { id: id },
             {$set: {
@@ -132,8 +133,13 @@ const rootQuery = {
                 managerId: input.managerId
             }}
         );
-        // TODO: return the old person
-        return new Person()
+        // return the old person
+        return new Person(
+            personJSON.id,
+            personJSON.firstName,
+            personJSON.lastName,
+            personJSON.jobTitle
+        );
     }
 }
 
