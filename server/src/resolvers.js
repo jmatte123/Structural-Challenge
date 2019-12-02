@@ -38,7 +38,6 @@ function mapJSONtoDepartmentArray(json) {
 const rootQuery = {
     // Get all the people in our database
     getPeople: async () => {
-        console.log(global.peopleCollection);
         const peopleJSON = await global.peopleCollection.find({}).toArray();
         return mapJSONtoPersonArray(peopleJSON);
     },
@@ -89,7 +88,7 @@ const rootQuery = {
     },
     // Create a person and put it into the Database
     createPerson: async ({ input }) => {
-        // TODO: verify the id, departmentId, and managerId
+        // TODO: verify the id, departmentId, and managerId is not already in the database
         const jsonOutput = await peopleCollection.insertOne({ 
             id: input.id, 
             firstName: input.firstName,
@@ -110,7 +109,7 @@ const rootQuery = {
     },
     // create a department and put it into the database
     createDepartment: async ({ input }) => {
-        // TODO: verify the id is not a copy
+        // TODO: verify the id is not already in the database
         const jsonOutput = await departmentsCollection.insertOne({
             name: input.name,
             id: input.id
@@ -123,7 +122,7 @@ const rootQuery = {
     },
     // update a person in the database based on a given id
     updatePerson: async ({ id, input }) => {
-        // TODO: verify the input data
+        // TODO: verify the input data with pre-existing data
         const jsonOutput = await peopleCollection.updateOne(
             { id: id },
             {$set: {
