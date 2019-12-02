@@ -43,7 +43,7 @@ const rootQuery = {
     },
     // Get a person by their id
     getPersonById: async ({ id }) => {
-        const personJSON = await peopleCollection.findOne({ id });
+        const personJSON = await global.peopleCollection.findOne({ id });
         return new Person(
             personJSON.id, 
             personJSON.firstName, 
@@ -53,43 +53,43 @@ const rootQuery = {
     },
     // Get all the people with the given firstname
     getPersonByFirstName: async ({ firstName }) => {
-        const peopleJSON = await db.peopleCollection.find({ firstName }).toArray();
+        const peopleJSON = await global.peopleCollection.find({ firstName }).toArray();
         return mapJSONtoPersonArray(peopleJSON);
     },
     // Get all the people with the given lastName
     getPersonByLastName: async ({ lastName }) => {
-        const peopleJSON = await peopleCollection.find({ lastName }).toArray();
+        const peopleJSON = await global.peopleCollection.find({ lastName }).toArray();
         return mapJSONtoPersonArray(peopleJSON);
     },
     // Get all the people with the given fullname
     getPersonByFullName: async ({ firstName, lastName }) => {
-        const peopleJSON = await peopleCollection.find({ firstName, lastName}).toArray();
+        const peopleJSON = await global.peopleCollection.find({ firstName, lastName}).toArray();
         return mapJSONtoPersonArray(peopleJSON);
     },
     // Get all the people with the given jobTitle
     getPersonByJobTitle: async ({ jobTitle }) => {
-        const peopleJSON = await peopleCollection.find({ jobTitle }).toArray();
+        const peopleJSON = await global.peopleCollection.find({ jobTitle }).toArray();
         return mapJSONtoPersonArray(peopleJSON);
     },
     // Get all the deparmtents in our database
     getDepartments: async () => {
-        const departmentsJSON = await departmentsCollection.find({}).toArray();
+        const departmentsJSON = await global.departmentsCollection.find({}).toArray();
         return mapJSONtoDepartmentArray(departmentsJSON);
     },
     // Get a department by their id
     getDepartmentById: async ({ id }) => {
-        const departmentJSON = await departmentsCollection.findOne({ id: id });
+        const departmentJSON = await global.departmentsCollection.findOne({ id: id });
         return new Department(departmentJSON.id, departmentJSON.name);
     },
     // Get all the departments by the given name
     getDepartmentByName: async ({ name }) => {
-        const departmentsJSON = await departmentsCollection.find({ name }).toArray();
+        const departmentsJSON = await global.departmentsCollection.find({ name }).toArray();
         return mapJSONtoDepartmentArray(departmentsJSON);
     },
     // Create a person and put it into the Database
     createPerson: async ({ input }) => {
         // TODO: verify the id, departmentId, and managerId is not already in the database
-        const jsonOutput = await peopleCollection.insertOne({ 
+        const jsonOutput = await global.peopleCollection.insertOne({ 
             id: input.id, 
             firstName: input.firstName,
             lastName: input.lastName,
@@ -102,15 +102,13 @@ const rootQuery = {
             newPersonJSON.id, 
             newPersonJSON.firstName, 
             newPersonJSON.lastName, 
-            newPersonJSON.jobTitle, 
-            newPersonJSON.departmentId, 
-            newPersonJSON.managerId
+            newPersonJSON.jobTitle
         );
     },
     // create a department and put it into the database
     createDepartment: async ({ input }) => {
         // TODO: verify the id is not already in the database
-        const jsonOutput = await departmentsCollection.insertOne({
+        const jsonOutput = await global.departmentsCollection.insertOne({
             name: input.name,
             id: input.id
         });
@@ -123,7 +121,7 @@ const rootQuery = {
     // update a person in the database based on a given id
     updatePerson: async ({ id, input }) => {
         // TODO: verify the input data with pre-existing data
-        const jsonOutput = await peopleCollection.updateOne(
+        const jsonOutput = await global.peopleCollection.updateOne(
             { id: id },
             {$set: {
                 id: input.id,
@@ -134,7 +132,7 @@ const rootQuery = {
                 managerId: input.managerId
             }}
         );
-        console.log(jsonOutput);
+        // TODO: return the old person
         return new Person()
     }
 }
