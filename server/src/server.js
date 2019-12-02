@@ -1,12 +1,14 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const logger = require('morgan');
 const rootQuery = require('./resolvers');
 const typeDefs = require('./schema');
+const db = require('./datamodels/mongo');
 
 var app = express();
-//app.use(logger('dev'));
 
+/**
+ * create our GraphQL API based on the schema and rootQuery.
+ */
 app.use('/', graphqlHTTP({
     schema: typeDefs,
     rootValue: rootQuery,
