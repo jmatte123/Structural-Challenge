@@ -1,6 +1,6 @@
 # Structural Challenge
 
-This repositories 
+This repositories holds my submission for the coding challenge at Structural.  In this reposititory, I use GraphQL, Node.js, Express.js, and MongoDB to create an API for the given dataset of people and departments in a fake company.  Follow the installation process to create a docker-compose container with MongoDB and all the data inside of it where you can use GraphQL Playground and run quiers on it.
 
 ## Installation
 
