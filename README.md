@@ -22,7 +22,7 @@ Execute the following commands to build the server-side docker images and run th
 docker build -t server ./server 
 docker-compose up
 ```
-Then, start up your GraphQL Playground application and run queries on the database.  Not much happens because there is no data in the database.  lets fix this...
+Next, we will be creating the database and the corresponding collections in the database. We will also be populating the database collections with data provided in the dataset.
 
 ### Populating the MongoDB Database
 
