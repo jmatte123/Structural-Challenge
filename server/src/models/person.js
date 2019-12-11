@@ -1,9 +1,9 @@
-const Department = require('./department');
+import Department from './department';
 
 /**
  * This class is our custom resolver for the type Person in our schema.
  */
-module.exports = class Person {
+export default class Person {
     /**
      * The constructor instanciates all the base properties
      * 

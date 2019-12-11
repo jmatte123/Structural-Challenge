@@ -1,5 +1,5 @@
-const Person = require('./models/person');
-const Department = require('./models/department');
+import Person from './models/person';
+import Department from './models/department';
 
 /**
  * This is a nice helper method that maps a json array of people to an actual array of People.
