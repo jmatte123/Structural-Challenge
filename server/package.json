@@ -4,7 +4,7 @@
   "description": "Backend for Structural Challenge",
   "main": "server.js",
   "scripts": {
-    "test": "node src/tests/query.test.js",
+    "test": "jest",
     "start": "nodemon src/server.js",
     "start:ci": "node src/server.js"
   },

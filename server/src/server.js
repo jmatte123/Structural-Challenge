@@ -2,7 +2,6 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const rootQuery = require('./resolvers');
 const typeDefs = require('./schema');
-const db = require('./datamodels/mongo');
 
 var app = express();
 

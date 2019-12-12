@@ -1,5 +1,6 @@
-const Person = require('./models/person').person;
-const Department = require('./models/person').department;
+require('./datamodels/mongo');
+const Person = require('./models/models').person;
+const Department = require('./models/models').department;
 
 /**
  * This is a nice helper method that maps a json array of people to an actual array of People.

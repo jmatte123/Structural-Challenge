@@ -77,6 +77,6 @@ class Department {
 
 
 module.exports = {
-    people: Person,
+    person: Person,
     department: Department
 }
