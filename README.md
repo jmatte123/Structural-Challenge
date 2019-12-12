@@ -58,6 +58,14 @@ query people{
 }
 ```
 
+## Testing
+
+There is a little automatted testing script.  It attempts to test a resolver for one of the queries.  As you will see it passes but it is not the best way to test it.
+
+```bash
+npm run test
+```
+
 ## Work Done
 I spent a lot of time on this, probably over 20 hours.  The reason why it took so long is because I had never worked with GraphQL or Docker before, let alone connecting everything together.  I also did a ton of research into Facebook's Relay framework along with Apollo Server. You can see on the other branch that I tried porting over my code to work with Apollo Server, however, I found out that the queries do not run the same as before, so I rolled back.
 
