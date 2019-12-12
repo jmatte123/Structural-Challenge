@@ -1,9 +1,8 @@
-import Department from './department';
 
 /**
  * This class is our custom resolver for the type Person in our schema.
  */
-export default class Person {
+class Person {
     /**
      * The constructor instanciates all the base properties
      * 
@@ -47,4 +46,37 @@ export default class Person {
             managerJSON.jobTitle
         );
     }
+}
+
+/**
+ * This class is our custom resolver for the type Department in our schema.
+ */
+class Department {
+    /**
+     * The constructor instanciates all the base properties
+     * 
+     * @param id 
+     * @param name 
+     */
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    /**
+     * This returns all the people that work in a given department
+     */
+    async people() {
+        // get all the people with the same departmentId
+        const peopleJSON = await global.peopleCollection.find({ departmentId: this.id }).toArray();
+        return peopleJSON.map((person) => {
+            return new Person(person.id, person.firstName, person.lastName, person.jobTitle);
+        });
+    }
+}
+
+
+module.exports = {
+    people: Person,
+    department: Department
 }
