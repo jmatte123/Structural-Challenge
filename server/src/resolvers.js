@@ -1,5 +1,5 @@
-const Person = require('./models/person');
-const Department = require('./models/department');
+const { Person } = require('./models/person');
+const { Department } = require('./models/department');
 
 /**
  * This is a nice helper method that maps a json array of people to an actual array of People.
@@ -28,6 +28,13 @@ function mapJSONtoDepartmentArray(json) {
     return json.map((type) => {
         return new Department(type.id, type.name);
     });
+}
+
+function clean(obj) {
+    return Object
+        .entries(obj)
+        .filter(([k,v]) => v != null)
+        .reduce((o, [k,v]) => Object.assign(o, { [k]: v }), {})
 }
 
 /**
@@ -89,8 +96,7 @@ const rootQuery = {
     // Create a person and put it into the Database
     createPerson: async ({ input }) => {
         // TODO: verify the id, departmentId, and managerId is not already in the database
-        const jsonOutput = await global.peopleCollection.insertOne({ 
-            id: input.id, 
+        const jsonOutput = await global.peopleCollection.insertOne({
             firstName: input.firstName,
             lastName: input.lastName,
             jobTitle: input.jobTitle,
@@ -119,26 +125,32 @@ const rootQuery = {
         );
     },
     // update a person in the database based on a given id and return the old person.
-    updatePerson: async ({ id, input }) => {
+    updatePerson: async ({ input }) => {
         // TODO: verify the input data with pre-existing data
-        const personJSON = await global.peopleCollection.findOne({ id });
+        const { id, ...args } = clean(input);
+        const person = await global.peopleCollection.findOne({ id });
+        if (!person) {
+            throw new Error(`Unable to find user with id ${id}`)
+        }
+        
         const jsonOutput = await global.peopleCollection.updateOne(
-            { id: id },
-            {$set: {
-                id: input.id,
-                firstName: input.firstName,
-                lastName: input.lastName,
-                jobTitle: input.jobTitle,
-                departmentId: input.departmentId,
-                managerId: input.managerId
-            }}
+            { id },
+            { $set: args }
         );
+
+        const { result: { n, nModified, ok } } = jsonOutput;
+        if (n !== 1 || ok !== 1) {
+            throw new Error(`Failed to update user ${id}`)
+        }
+
+        const updatedPerson = await global.peopleCollection.findOne({ id });
+
         // return the old person
         return new Person(
-            personJSON.id,
-            personJSON.firstName,
-            personJSON.lastName,
-            personJSON.jobTitle
+            updatedPerson.id,
+            updatedPerson.firstName,
+            updatedPerson.lastName,
+            updatedPerson.jobTitle
         );
     }
 }

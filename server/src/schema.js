@@ -16,12 +16,20 @@ var typeDefs = buildSchema(`
         people: [Person]
     }
 
-    input PersonInput {
-        id: String!
+    input PersonCreate {
         firstName: String!
         lastName: String!
         jobTitle: String!
         departmentId: String!
+        managerId: String
+    }
+
+    input PersonUpdate {
+        id: String!
+        firstName: String
+        lastName: String
+        jobTitle: String
+        departmentId: String
         managerId: String
     }
 
@@ -60,9 +68,9 @@ var typeDefs = buildSchema(`
     }
 
     type Mutation {
-        createPerson(input: PersonInput!): Person
+        createPerson(input: PersonCreate!): Person
         createDepartment(input: DepartmentInput!): Department
-        updatePerson(id: String!, input: PersonInput!): Person
+        updatePerson(input: PersonUpdate!): Person
     }
 `);
 

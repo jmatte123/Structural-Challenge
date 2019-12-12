@@ -1,9 +1,9 @@
-const Department = require('./department');
+const D = require('./department');
 
 /**
  * This class is our custom resolver for the type Person in our schema.
  */
-module.exports = class Person {
+exports.Person = class Person {
     /**
      * The constructor instanciates all the base properties
      * 
@@ -27,7 +27,7 @@ module.exports = class Person {
         const personJSON = await global.peopleCollection.findOne({ id: this.id });
         // then grab the deparment based on the persons departmentId.
         const departmentJSON = await global.departmentsCollection.findOne({ id: personJSON.departmentId });
-        return new Department(departmentJSON.id, departmentJSON.name);
+        return new D.Department(departmentJSON.id, departmentJSON.name);
     }
 
     /**

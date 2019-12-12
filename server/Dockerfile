@@ -1,8 +1,8 @@
 FROM node:12.6.0
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+COPY ./package.json .
 
 EXPOSE 4000
 
