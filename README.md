@@ -64,4 +64,8 @@ I spent a lot of time on this, probably over 20 hours.  The reason why it took s
 This is exactly what I expected going into this project. I was hoping to be challenged this hard as I imagine that is what this position would require.  I had a lot fun learning everything during this challenge, and I will definitly use it on my school project.
 
 ## Future work
-I was hoping to write the test scripts for this challenge, however I spent to much time trying to learn the Apollo Server framework.  I was also hoping to write a React frontend to the challenge, I did do some research into it when I was looking at Relay and Apollo Server documentation.
+I was hoping to do the following for future work: 
+* Write more and better automated testing scripts.
+* Write a React frontend, either using Apollo Server or Relay.js.  
+* Implement Mongoose to take out the MongoClient global variables.
+* Do some verification in the resolver functions.
